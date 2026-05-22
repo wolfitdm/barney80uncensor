@@ -1,0 +1,1 @@
+pyinstaller --hidden-import UnityPy.resources --hidden-import UnityPy --hidden-import lzma --add-data C:\Users\CdemyTeilnehmer\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\UnityPy;UnityPy --onefile barney80uncensor.py
