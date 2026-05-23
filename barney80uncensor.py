@@ -69,8 +69,8 @@ else:
         print("\033[93m  [SKIP] No \"val = 15\" entries found. The file may already be patched.\n\033[0m")
     else:
         print(f"  {edited_rows} \"val = 15\" rows patched.\n  Saving & compressing the file... (may take a couple of minutes)")
-        patched_bytes = env.file.save(packer="lz4")    #Save with compression
-        #patched_bytes = env.file.save()               #Save without compression
+        #patched_bytes = env.file.save(packer="lz4")    #Save with compression
+        patched_bytes = env.file.save()               #Save without compression
         env.objects.clear()
         with open(file_path, "wb") as f:
             f.write(patched_bytes)
