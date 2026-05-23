@@ -5,17 +5,25 @@ from tkinter import filedialog
 import sys
 import os
 
+def get_file_path():
+    if getattr(sys, 'frozen', False):
+       app_dir = Path(sys.executable).parent
+    else:
+       app_dir = Path(__file__).resolve().parent
+    return app_dir
+
+def get_data_unity3d_path():
+    data_path = get_file_path()
+    data_path = os.path.join(data_path, "Mad Island_Data", "data.unity3d")
+    return data_path
+    
 root = tk.Tk()
 root.withdraw()
 
 mosaic_text = "MosaicField"
 none_bat_subpath = r"StreamingAssets\XML\none.bat"
 
-file_path = os.path.abspath(__file__)
-
-file_path = os.path.dirname(file_path)
-
-file_path = os.path.join(file_path, "Mad Island_Data", "data.unity3d")
+file_path = get_data_unity3d_path()
 
 if not os.path.isfile(file_path):
    file_path = filedialog.askopenfilename(
@@ -69,8 +77,8 @@ else:
         print("\033[93m  [SKIP] No \"val = 15\" entries found. The file may already be patched.\n\033[0m")
     else:
         print(f"  {edited_rows} \"val = 15\" rows patched.\n  Saving & compressing the file... (may take a couple of minutes)")
-        #patched_bytes = env.file.save(packer="lz4")    #Save with compression
-        patched_bytes = env.file.save()               #Save without compression
+        patched_bytes = env.file.save(packer="lz4")    #Save with compression
+        #patched_bytes = env.file.save()               #Save without compression
         env.objects.clear()
         with open(file_path, "wb") as f:
             f.write(patched_bytes)
